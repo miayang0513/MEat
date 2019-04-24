@@ -1,0 +1,36 @@
+extends main
+
+block main
+  div(class="banner")
+    div(class="gradient")
+    div(class="container pb-5 h-100 position-relative d-flex flex-column justify-content-end")
+      h1(class="text-center text-white py-3 ") 快來收藏屬於自己的美食吧!
+      form(action="" method="GET" class="w-50 my-0 mx-auto")
+        div(id="search_container" class="d-flex justify-content-center bg-light")
+          input(type="text" name="restaurant" placeholder="美食分類、餐廳" class="search_input")
+          div(class="separation_line")
+          input(type="text" name="region" placeholder="搜尋地區" class="search_input")
+      div(class="d-flex justify-content-center pt-4")
+        span(class="text-white") 搜尋：
+  main(class="container d-flex")
+    div(class="col-md-10 col-12 mx-auto my-5")
+      div(class="card-columns row" id="")
+        each restaurant in restaurants
+          div(class='col-4')
+            a(href=`/restaurants/${restaurant.id}` class="text-secondary")
+              div(class="card mb-3")
+                div(style='height: 200px')
+                  img(class="card-img-top" src=`${restaurant.image}` alt=`${restaurant.name}`)
+                div(class="card-body p-3")
+                  h6(class="card-title mb-1") #{restaurant.name}
+                  div(class="restaurant-category mb-1")
+                    i(class="fas fa-utensils pr-2")  #{restaurant.category}
+                  div(class='d-flex justify-content-between align-items-center')
+                    span(class="badge badge-pill badge-danger font-weight-normal")
+                      | #{restaurant.rating} 
+                      i(class="fas fa-star fa-xs")
+                    div
+                      a(href=`/restaurants/${restaurant.id}/edit` class='editIcon') 
+                        i(class="far fa-edit") 
+                      button( type="submit" class='deleteIcon' data-toggle="modal" data-target="#exampleModal" data-id=`${restaurant.id}`)
+                        i(class="far fa-trash-alt")
