@@ -6,4 +6,6 @@ router.get('/', (req, res) => {
   res.render('index', { restaurants: restaurants.results})
 })
 
+router.use('/user', require('./user'))
+
 module.exports = router
