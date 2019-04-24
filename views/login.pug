@@ -10,8 +10,8 @@ block body
         h1(class="text-center mb-3") Login
         form(action="/user/login" method="POST")
           div(class="form-group")
-            label(for="email") Email
-            input(type="email" id="email" name="email" placeholder="email" class="form-control")
+            label(for="account") Username or email address
+            input(type="text" id="account" name="account" placeholder="username or email" class="form-control")
           div(class="form-group")
             label(for="password") Password
             input(type="password" id="password" name="password" placeholder="password" class="form-control")
