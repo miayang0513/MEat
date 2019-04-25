@@ -24,6 +24,25 @@ header {
   height: 100vh;
 }
 
+ul.nav {
+  position: absolute;
+  right: 16px;
+  top: 8px;
+}
+
+summary {
+  outline: none; 
+}
+
+/* summary::-webkit-details-marker { display:none; } */
+
+.summary-list {
+  display: block;
+  text-align: center;
+  background-color: #FFFFFF;
+  color: black;
+}
+
 .overlay {
   background-color: rgba(0, 0, 0, 0.5);
 }
