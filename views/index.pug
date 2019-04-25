@@ -29,7 +29,7 @@ block body
       option(value="rating_desc") 評分(高至低)
       option(value="rating_asc") 評分(低至高)
     div(class="col-md-10 col-12 mx-auto my-5")
-      div(class="card-columns row")
+      div(class="card-columns row" id="listen")
         each restaurant in restaurants
           div(class='col-4')
             a(href=`/restaurants/${restaurant.id}` class="text-secondary")
@@ -49,3 +49,13 @@ block body
                         i(class="far fa-edit") 
                       button( type="submit" class='deleteIcon' data-toggle="modal" data-target="#exampleModal" data-id=`${restaurant.id}`)
                         i(class="far fa-trash-alt")
+  div(class="modal fade" id="exampleModal"  role="dialog")
+    div(class="modal-dialog" role="document")
+      div(class="modal-content")
+        div(class="modal-header")
+          h5(class="modal-title" id="exampleModalLabel")
+          button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true") &times
+        div(class="modal-body d-flex justify-content-end")
+append script
+  script(src="/javascript/confirm.js") 

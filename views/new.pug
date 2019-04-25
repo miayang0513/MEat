@@ -1,0 +1,42 @@
+extends main
+
+block body
+  div(class="banner")
+    div(class="gradient")
+  div(class='container d-flex justify-content-center' style={'margin-top': '-320px'})
+    div(class='card col-8')
+      div(class='card-body')
+        h5(class='card-title') Add a restaurant
+        form(action='/restaurants' method="POST")
+          div(class='form-row')
+            div(class='form-group col-md-5')
+              label(class='' for='name') 店名
+              input(id='name' class='form-control' type='text' name='name')
+            div(class='form-group col-md-3')
+              label(class='' for='category') 種類
+              input(id='category' class='form-control' type='text' name='category' ) 
+            div(class='form-group col-md-4')
+              label(class='' for='rating') 分數
+              input(id='rating' class='custom-range' type='range' min="0" max="5" name='rating') 
+          div(class='form-group')
+            label(class='' for='image') 照片連結
+            input(id='image' class='form-control' type='text' name='image') 
+          div(class='form-row')
+            div(class='form-group col-md-3')
+              label(class='' for='region') 地區
+              input(id='region' class='form-control' type='text' name='region') 
+            div(class='form-group col-md-9')
+              label(class='' for='location') 地址
+              input(id='location' class='form-control' type='text' name='location') 
+          div(class='form-group')
+            label(class='' for='phone') 電話
+            input(id='phone' class='form-control' type='text' name='phone') 
+          div(class='form-group')
+            label(class='' for='google_map') google map
+            input(id='google_map' class='form-control' type='text' name='google_map') 
+          div(class='form-group')
+            label(class='' for='description') 評論
+            input(id='description' class='form-control' type='text' name='description') 
+          div(class='form-group d-flex flex-row-reverse')
+            div(class='col-2')
+              button(class='btn btn-primary' type='submit') Add

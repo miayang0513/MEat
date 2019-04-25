@@ -12,7 +12,10 @@ router.get('/new', (req, res) => {
 
 // 新增店家
 router.post('/', (req, res) => {
-  const restaurant = Restaurant(req.body)
+  const restaurant = Restaurant({
+    ...req.body,
+    userId: req.user._id }
+  )
 
   restaurant.save(err => {
     if (err) return console.error(err)
@@ -23,11 +26,11 @@ router.post('/', (req, res) => {
 // 收尋店家
 router.get('/search', (req, res) => {
   const regKeyword = RegExp(`${req.query.keyword}`, 'i')
-  const region = req.query.region ? req.query.region : {$exists:true}
-  const sort = req.query.sort ? req.query.sort.split("_") : ['name', 'asc']
+  const region = req.query.region ? req.query.region : { $exists: true }
+  const sort = req.query.sort ? req.query.sort.split('_') : ['name', 'asc']
   Restaurant.find({
-    userId: req.user._id, 
-    city: region,
+    userId: req.user._id,
+    region: region,
     $or: [
       { name: regKeyword },
       { category: regKeyword }
@@ -49,16 +52,16 @@ router.get('/:id', (req, res) => {
 
 // 修改頁面
 router.get('/:id/edit', (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
+  Restaurant.findOne({ userId: req.user._id, _id: req.params.id }, (err, restaurant) => {
     if (err) return console.error(err)
-
+    console.log(restaurant)
     return res.render('edit', { restaurant })
   })
 })
 
 // 修改單筆資料
 router.put('/:id', (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
+  Restaurant.findOne({ userId: req.user._id, _id: req.params.id }, (err, restaurant) => {
     if (err) return console.error(err)
     for (let item in req.body) {
       restaurant[item] = req.body[item]
@@ -73,12 +76,10 @@ router.put('/:id', (req, res) => {
 // 刪除店家資料
 router.delete('/:id', (req, res) => {
   console.log(req.params.id)
-  Restaurant.findById(req.params.id, (err, restaurant) => {
+  Restaurant.findOne({ userId: req.user._id, _id: req.params.id }, (err, restaurant) => {
     if (err) return console.error(err)
-    console.log(restaurant)
     restaurant.remove(err => {
       if (err) return console.error(err)
-
       return res.redirect('/')
     })
   })
