@@ -4,17 +4,32 @@ block body
   div(class="banner")
     div(class="gradient")
     div(class="container pb-5 h-100 position-relative d-flex flex-column justify-content-end")
-      h1(class="text-center text-white py-3 ") 快來收藏屬於自己的美食吧!
-      form(action="" method="GET" class="w-50 my-0 mx-auto")
-        div(id="search_container" class="d-flex justify-content-center bg-light")
-          input(type="text" name="restaurant" placeholder="美食分類、餐廳" class="search_input")
+      h1(class="text-center text-white py-3 ") 想知道哪裡有美食!？
+      form(id="form" action="/restaurants/search" method="GET" class="w-50 my-0 mx-auto")
+        div(id="search_container" class="d-flex justify-content-center position-relative")
+          if keyword
+            input(type="text" name="keyword" placeholder="美食分類、餐廳" value=`${keyword}` class="search_input")
+          else
+            input(type="text" name="keyword" placeholder="美食分類、餐廳" class="search_input")
           div(class="separation_line")
-          input(type="text" name="region" placeholder="搜尋地區" class="search_input")
+          if region
+            input(type="text" name="region" placeholder="搜尋地區" value=`${region}` class="search_input")     
+          else
+            input(type="text" name="region" placeholder="搜尋地區" class="search_input")
+          div(id="search_icon" class="position-absolute")
+            button(class="btn btn-major" type="submit" id="search-button")
+              i(class="fas fa-search")
       div(class="d-flex justify-content-center pt-4")
         span(class="text-white") 搜尋：
-  main(class="container d-flex")
+  main(class="container d-flex flex-column")
+    select(id="sortSelect" name="sort" OnInput='form.submit()' form="form" class="btn-warning")
+      option(value="" selected disabled hidden) 排序方式
+      option(value="name_asc") 店名(A->Z)
+      option(value="name_desc") 店名(Z->A)
+      option(value="rating_desc") 評分(高至低)
+      option(value="rating_asc") 評分(低至高)
     div(class="col-md-10 col-12 mx-auto my-5")
-      div(class="card-columns row" id="")
+      div(class="card-columns row")
         each restaurant in restaurants
           div(class='col-4')
             a(href=`/restaurants/${restaurant.id}` class="text-secondary")
