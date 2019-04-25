@@ -5,7 +5,7 @@ const restaurantList = require('../../restaurant.json').results
 const User = require('../user')
 const users = require('../../user.json').results
 
-mongoose.connect('mongodb://127.0.0.1/restaurant', { useNewUrlParser: true , useCreateIndex: true })
+mongoose.connect('mongodb://127.0.0.1/restaurant', { useNewUrlParser: true, useCreateIndex: true })
 
 const db = mongoose.connection
 
@@ -24,9 +24,9 @@ db.once('open', () => {
       })
     })
 
-    for (let j = i*3; j < (i+1)*3 ; j++, count++) {
-      Restaurant.create({...restaurantList[j], userId: user._id})
-      if (count === restaurantList.length) return 
+    for (let j = i * 3; j < (i + 1) * 3; j++, count++) {
+      Restaurant.create({ ...restaurantList[j], userId: user._id })
+      if (count === restaurantList.length) return
     }
   }
 })
