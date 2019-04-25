@@ -8,5 +8,6 @@ router.get('/', authenticate, (req, res) => {
 })
 
 router.use('/user', require('./user'))
+router.use('/auth', require('./thirdPartyAuth'))
 
 module.exports = router

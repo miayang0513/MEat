@@ -6,7 +6,6 @@ const password = document.querySelector('#password')
 const password2 = document.querySelector('#password2')
 const password2Feedback = document.querySelector('#password2~.invalid-feedback')
 
-
 form.addEventListener('submit', event => {
   event.preventDefault()
   if (form.checkValidity() === false) {
@@ -22,8 +21,7 @@ form.addEventListener('submit', event => {
   }
 })
 
-
-async function register() {
+async function register () {
   try {
     // const params = {
     //   username: username.value,
@@ -35,7 +33,7 @@ async function register() {
     params.append('email', email.value)
     params.append('password', password.value)
 
-    const response = await axios('/user/register',{
+    const response = await axios('/user/register', {
       method: 'POST',
       data: params
     })
@@ -44,16 +42,13 @@ async function register() {
       emailFeedback.innerHTML = response.data.msg
       email.classList.add('is-invalid')
     } else {
-      window.location = "/"
+      window.location = '/'
     }
   } catch (error) {
     console.error(error)
   }
-
-
 }
 
 form.addEventListener('input', e => {
-  if (e.target.matches('.is-invalid'))
-    e.target.classList.remove('is-invalid')
+  if (e.target.matches('.is-invalid')) { e.target.classList.remove('is-invalid') }
 })

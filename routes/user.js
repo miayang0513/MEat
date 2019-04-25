@@ -12,10 +12,10 @@ router.get('/login', (req, res) => {
   res.render('login')
 })
 
-router.post('/login', passport.authenticate('local', { 
-    successRedirect: '/',
-    failureRedirect: '/user/login'
-  })
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/user/login'
+})
 )
 
 // router.post('/login', (req, res, next) => {
@@ -32,10 +32,10 @@ router.get('/register', (req, res) => {
 
 router.post('/register', (req, res) => {
   // const user = req.body
-  const { username, email, password} = req.body
+  const { username, email, password } = req.body
   User.findOne({ email: email }).then(user => {
     if (user) {
-      res.send({msg: 'The Email is taken. Try another.', status: 401})
+      res.send({ msg: 'The Email is taken. Try another.', status: 401 })
     } else {
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(password, salt, (err, hash) => {
@@ -45,7 +45,7 @@ router.post('/register', (req, res) => {
             password: hash
           })
           newUser.save().then(user => {
-            res.send({redirect: '/'})
+            res.send({ redirect: '/' })
           }).catch(err => console.log(err))
         })
       })
@@ -54,9 +54,9 @@ router.post('/register', (req, res) => {
 })
 
 router.get('/logout', (req, res) => {
-  // remove req.user and clear the login session 
+  // remove req.user and clear the login session
   req.logout()
-  res.redirect('/users/login')
+  res.redirect('/user/login')
 })
 
 module.exports = router
