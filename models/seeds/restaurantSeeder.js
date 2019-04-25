@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 const Restaurant = require('../restaurant')
 const restaurantList = require('../../restaurant.json').results
 const User = require('../user')
@@ -16,7 +17,13 @@ db.once('open', () => {
   console.log('db connected!')
   for (let i = 0, count = 0; i < users.length; i++) {
     const user = User(users[i])
-    user.save()
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(user.password, salt, (err, hash) => {
+        user.password = hash
+        user.save()
+      })
+    })
+
     for (let j = i*3; j < (i+1)*3 ; j++, count++) {
       Restaurant.create({...restaurantList[j], userId: user._id})
       if (count === restaurantList.length) return 
