@@ -16,7 +16,7 @@ block body
           div(class="form-group")
             label(for="email") Email
             input(type="email" id="email" name="email" class="form-control" placeholder="Enter Email" value=`${user.email}` required)
-            div(class="invalid-feedback") Email is required
+            div(class="invalid-feedback") Please enter a valid email address
           div(class="form-group")
             label(for="password") Password
             input(type="password" id="password" name="password" class="form-control" placeholder="Create Password" value=`${user.password}` required)
@@ -30,4 +30,4 @@ block body
           | Have a Account? 
           a(href="/user/login") Login
 append script
-  script(src="/javascript/inputValidate.js")
+  script(src="/javascript/registerValidate.js")

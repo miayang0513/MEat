@@ -14,18 +14,24 @@ router.get('/login', (req, res) => {
   res.render('login')
 })
 
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/user/login'
-})
-)
-
-// router.post('/login', (req, res, next) => {
-//   passport.authenticate('local', {
-//     successRedirect: '/',
-//     failureRedirect: '/users/login'
-//   })(req, res, next)
+// router.post('/login', passport.authenticate('local', {
+//   successRedirect: '/',
+//   failureRedirect: '/user/login'
 // })
+// )
+
+router.post('/login', (req, res, next) => {
+  passport.authenticate('local', function (err, user, info) {
+    if (err) { return next(err) }
+
+    if (!user) { return res.send({ ...info, status: 401 }) }
+
+    req.logIn(user, function (err) {
+      if (err) { return next(err) }
+      return res.redirect('/')
+    })
+  })(req, res, next)
+})
 
 router.get('/register', (req, res) => {
   const user = { username: '', email: '', password: '', password2: '' }
