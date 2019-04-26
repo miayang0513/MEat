@@ -44,18 +44,4 @@ block body
                     span(class="badge badge-pill badge-danger font-weight-normal")
                       | #{restaurant.rating} 
                       i(class="fas fa-star fa-xs")
-                    div
-                      a(href=`/restaurants/${restaurant.id}/edit` class='editIcon') 
-                        i(class="far fa-edit") 
-                      button( type="submit" class='deleteIcon' data-toggle="modal" data-target="#exampleModal" data-id=`${restaurant.id}`)
-                        i(class="far fa-trash-alt")
-  div(class="modal fade" id="exampleModal"  role="dialog")
-    div(class="modal-dialog" role="document")
-      div(class="modal-content")
-        div(class="modal-header")
-          h5(class="modal-title" id="exampleModalLabel")
-          button(type="button" class="close" data-dismiss="modal" aria-label="Close")
-            span(aria-hidden="true") &times
-        div(class="modal-body d-flex justify-content-end")
-append script
-  script(src="/javascript/confirm.js") 
+                    a(class="px-2" href=`/restaurants/${restaurant.id}#comment`) 7則評論

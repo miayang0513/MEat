@@ -1,0 +1,58 @@
+extends main
+
+block header
+  header(class="container-fluid bg-dark")
+    nav(class='navbar')
+      a(class="navbar-brand text-white position-relative" href="/") MEat
+      form(id="form" action="/restaurants/search" method="GET" class="mx-auto position-relative")
+        div(id="search_container" class="d-flex justify-content-center position-relative" data-page="my-restaurant")
+          input(type="text" name="keyword" placeholder="美食分類、餐廳" class="search_input" data-page="my-restaurant")
+          div(class="separation_line")
+          input(type="text" name="region" placeholder="搜尋地區" class="search_input" data-page="my-restaurant")
+          div(id="search_icon" class="position-absolute" data-page="my-restaurant")
+            button(class="btn btn-major" type="submit" id="search-button")
+              i(class="fas fa-search")
+      ul(class="nav")
+        li
+          a(class="text-white d-block px-3 py-2" href="/restaurants/new") 發表食記
+        li
+          a(class="text-white d-block px-3 py-2" href="/user/restaurants") 我的食記
+        li 
+          details
+            summary(class="text-white d-block px-3 py-2") Hi #{user.username}
+            a(class="summary-list" href="/user/logout") 登出
+block body
+  main(class="container d-flex flex-column")
+    h1(class="text-center mt-5") #{user.username} 的食記
+    div(class="col-md-10 col-12 mx-auto my-5")
+      div(class="card-columns row" id="listen")
+        each restaurant in restaurants
+          div(class='col-4')
+            a(href=`/restaurants/${restaurant.id}` class="text-secondary")
+              div(class="card mb-3")
+                div(style='height: 200px')
+                  img(class="card-img-top" src=`${restaurant.image}` alt=`${restaurant.name}`)
+                div(class="card-body p-3")
+                  h6(class="card-title mb-1") #{restaurant.name}
+                  div(class="restaurant-category mb-1")
+                    i(class="fas fa-utensils pr-2")  #{restaurant.category}
+                  div(class='d-flex justify-content-between align-items-center')
+                    span(class="badge badge-pill badge-danger font-weight-normal")
+                      | #{restaurant.rating} 
+                      i(class="fas fa-star fa-xs")
+                    a(class="px-2" href=`/restaurants/${restaurant.id}#comment`) 7則評論
+                    div
+                      a(href=`/restaurants/${restaurant.id}/edit` class='editIcon') 
+                        i(class="far fa-edit") 
+                      button( type="submit" class='deleteIcon' data-toggle="modal" data-target="#exampleModal" data-id=`${restaurant.id}`)
+                        i(class="far fa-trash-alt")
+  div(class="modal fade" id="exampleModal"  role="dialog")
+    div(class="modal-dialog" role="document")
+      div(class="modal-content")
+        div(class="modal-header")
+          h5(class="modal-title" id="exampleModalLabel")
+          button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true") &times
+        div(class="modal-body d-flex justify-content-end")
+append script
+  script(src="/javascript/confirm.js") 

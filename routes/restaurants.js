@@ -29,7 +29,6 @@ router.get('/search', (req, res) => {
   const region = req.query.region ? req.query.region : { $exists: true }
   const sort = req.query.sort ? req.query.sort.split('_') : ['name', 'asc']
   Restaurant.find({
-    userId: req.user._id,
     region: region,
     $or: [
       { name: regKeyword },
@@ -43,10 +42,12 @@ router.get('/search', (req, res) => {
 
 // 詳細店家頁面
 router.get('/:id', (req, res) => {
-  Restaurant.findById(req.params.id, (err, restaurant) => {
+  Restaurant.findOne({ _id: req.params.id }, (err, restaurant) => {
     if (err) return console.error(err)
-
-    return res.render('show', { restaurant })
+    Restaurant.find({ userId: { $ne: req.user._id }, _id: { $ne: req.params.id } }, (err, restaurants) => {
+      if (err) return console.error(err)
+      return res.render('show', { restaurant, recommend: restaurants })
+    })
   })
 })
 

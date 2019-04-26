@@ -4,7 +4,7 @@ const { authenticate } = require('../config/auth')
 const Restaurant = require('../models/restaurant')
 
 router.get('/', authenticate, (req, res) => {
-  Restaurant.find({ userId: req.user._id }).sort({ name: 'asc' })
+  Restaurant.find().sort({ name: 'asc' })
     .exec((err, restaurants) => {
       if (err) return console.error(err)
       res.render('index', { restaurants })

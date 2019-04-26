@@ -3,6 +3,8 @@ const router = express.Router()
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
 const passport = require('passport')
+const { authenticate } = require('../config/auth')
+const Restaurant = require('../models/restaurant')
 
 /*
 prefix: "/user"
@@ -57,6 +59,14 @@ router.get('/logout', (req, res) => {
   // remove req.user and clear the login session
   req.logout()
   res.redirect('/user/login')
+})
+
+router.get('/restaurants', authenticate, (req, res) => {
+  Restaurant.find({ userId: req.user._id }).sort({ name: 'asc' })
+    .exec((err, restaurants) => {
+      if (err) return console.error(err)
+      res.render('myRestaurant', { restaurants })
+    })
 })
 
 module.exports = router
