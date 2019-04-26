@@ -1,6 +1,7 @@
 const LocalStrategy = require('passport-local').Strategy
 const FacebookStrategy = require('passport-facebook').Strategy
 const GoogleStrategy = require('passport-google-oauth20').Strategy
+const thirdPartyKey = require('../thirdPartyKey.json')
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
 
@@ -26,8 +27,8 @@ module.exports = passport => {
 
   passport.use(
     new FacebookStrategy({
-      clientID: '2190883057891628',
-      clientSecret: '473ccd16a18136a78209b6d80fdfd750',
+      clientID: thirdPartyKey['Facebook']['clientID'],
+      clientSecret: thirdPartyKey['Facebook']['clientSecret'],
       callbackURL: 'http://localhost:3000/auth/facebook/callback',
       profileFields: ['email', 'displayName']
     }, (accessToken, refreshToken, profile, done) => {
@@ -58,8 +59,8 @@ module.exports = passport => {
 
   passport.use(
     new GoogleStrategy({
-      clientID: '531419383479-u7sku3dqa4ab9lftmglcfe4pj9jiefh7.apps.googleusercontent.com',
-      clientSecret: 'l9BMilKEDzIuVkX6DkmP1yaz',
+      clientID: thirdPartyKey['Google']['clientID'],
+      clientSecret: thirdPartyKey['Google']['clientSecret'],
       callbackURL: 'http://localhost:3000/auth/google/callback'
     }, (accessToken, refreshToken, profile, done) => {
       User.findOne({ email: profile._json.email })
