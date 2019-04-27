@@ -16,11 +16,7 @@ form.addEventListener('submit', event => {
 
 async function login () {
   try {
-    // const params = {
-    //   username: username.value,
-    //   email: email.value,
-    //   password: password.value
-    // }
+
     let params = new URLSearchParams()
     params.append('email', email.value)
     params.append('password', password.value)
@@ -29,7 +25,6 @@ async function login () {
       method: 'POST',
       data: params
     })
-    console.log(response)
     if (response.data.status === 401) {
       if (response.data.type === 'email') {
         emailFeedback.innerHTML = response.data.msg
@@ -39,7 +34,7 @@ async function login () {
       passwordFeedback.innerHTML = response.data.msg
       password.classList.add('is-invalid')
     } else {
-      window.location = '/'
+      window.location = response.data.redirect
     }
   } catch (error) {
     console.error(error)

@@ -23,11 +23,6 @@ form.addEventListener('submit', event => {
 
 async function register () {
   try {
-    // const params = {
-    //   username: username.value,
-    //   email: email.value,
-    //   password: password.value
-    // }
     let params = new URLSearchParams()
     params.append('username', username.value)
     params.append('email', email.value)
@@ -42,7 +37,7 @@ async function register () {
       emailFeedback.innerHTML = response.data.msg
       email.classList.add('is-invalid')
     } else {
-      window.location = '/'
+      window.location = response.data.redirect
     }
   } catch (error) {
     console.error(error)
